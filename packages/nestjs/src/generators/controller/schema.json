@@ -1,52 +1,80 @@
 {
-  "$schema": "https://json-schema.org/schema",
-  "$id": "NxNestControllerGenerator",
-  "title": "Nest Controller Options Schema",
-  "description": "Nest Controller Options Schema.",
-  "cli": "nx",
+  "$schema": "http://json-schema.org/schema",
+  "$id": "Controller",
+  "title": "",
   "type": "object",
   "properties": {
-    "path": {
-      "description": "Path where the controller will be generated.",
+    "projectName": {
       "type": "string",
+      "description": "Application name in your workspace, e.g. 'platform'",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "Where should the controller be generated?"
+      "x-prompt": "What is app name?",
+      "x-dropdown": "projects",
+      "minLength": 1
     },
-    "name": {
-      "description": "The name of the controller.",
+    "controllerName": {
       "type": "string",
-      "x-prompt": "What name would you like to use?"
+      "description": "Controller name, usually match with entity name",
+      "x-prompt": "What is controller name? (lowercase) e.g. user-group",
+      "minLength": 1
     },
-    "skipFormat": {
-      "description": "Skip formatting files.",
+    "basePath": {
+      "type": "string",
+      "description": "App base path name",
+      "x-prompt": "What is app base path name?  e.g. api/platform",
+      "minLength": 1
+    },
+    "serviceName": {
+      "type": "string",
+      "description": "Service name, usually match with entity name and controller name. It's default service that will be injected to controller.",
+      "x-prompt": "What is service name? e.g user-group",
+      "minLength": 1
+    },
+    "entityName": {
+      "type": "string",
+      "description": "Entity name, usually match with controller and service name. It will be used for base DTO generations",
+      "x-prompt": "What is entity name? e.g user-group",
+      "minLength": 1
+    },
+    "groupName": {
+      "type": "string",
+      "description": "Group name is folder name that you want to generate your entity in it e.g. 'users'",
+      "x-prompt": "What is group name for generation? It's folder name under the base controllers folder",
+      "minLength": 1
+    },
+    "tenantBaseEntity": {
       "type": "boolean",
-      "default": false,
-      "x-priority": "internal"
+      "default": true,
+      "description": "It's indicating that this controller is tenant base",
+      "x-prompt": "Is this a tenant base controller? (y/n). (Useful for DTO generation, to exclude tenant id from DTOs)"
     },
-    "unitTestRunner": {
-      "description": "Test runner to use for unit tests.",
-      "type": "string",
-      "enum": ["jest", "none"],
-      "default": "jest"
-    },
-    "language": {
-      "description": "Nest controller language.",
-      "type": "string",
-      "enum": ["js", "ts"]
-    },
-    "skipImport": {
-      "description": "Flag to skip the module import.",
+    "entityIncludesIdField": {
       "type": "boolean",
-      "default": false
+      "default": true,
+      "description": "Indicates if the entity has an 'id' field. If yes, then it will be excluded from the generated DTOs.",
+      "x-prompt": "Does your entity include an 'id' field that should be excluded from DTOs? (y/n)"
     },
-    "module": {
-      "description": "Allows specification of the declaring module.",
-      "type": "string"
+    "entityIncludesVersionField": {
+      "type": "boolean",
+      "default": true,
+      "description": "Indicates if the entity has a 'version' field. If yes, then it will be excluded from the generated DTOs.",
+      "x-prompt": "Does your entity include a 'version' field that should be excluded from DTOs? (y/n)"
+    },
+    "lintCommandName": {
+      "type": "string",
+      "default": "lint",
+      "description": "The name of lint nx command in project.json"
     }
   },
-  "additionalProperties": false,
-  "required": ["path"]
+  "required": [
+    "projectName",
+    "controllerName",
+    "serviceName",
+    "entityName",
+    "groupName",
+    "tenantBaseEntity"
+  ]
 }

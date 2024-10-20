@@ -1,0 +1,38 @@
+import { LoggerConfig } from '@softkit/logger';
+import { AuthConfig } from '@softkit/auth';
+import { SwaggerConfig } from '@softkit/swagger-utils';
+import { I18Config } from '@softkit/i18n';
+import { DbConfig } from '@softkit/typeorm';
+import { AppConfig } from '@softkit/bootstrap';
+import { HttpClientConfig } from '@softkit/server-http-client';
+import { PlatformClientConfig } from '@softkit/platform-client';
+import { HealthConfig } from '@softkit/health-check';
+import { ValidateNestedProperty } from '@softkit/validation';
+
+export default class <%= pascalCase(name) -%>RootConfig {
+  @ValidateNestedProperty({ classType: LoggerConfig })
+  public readonly logs!: LoggerConfig;
+<% if (auth) { %>
+  @ValidateNestedProperty({ classType: AuthConfig })
+  public readonly auth!: AuthConfig;
+<% } %>
+  @ValidateNestedProperty({ classType: AppConfig })
+  public readonly app!: AppConfig;
+
+  @ValidateNestedProperty({ classType: SwaggerConfig })
+  public readonly swagger!: SwaggerConfig;
+
+  @ValidateNestedProperty({ classType: I18Config })
+  public readonly i18!: I18Config;
+
+<% if (db) { %>
+  @ValidateNestedProperty({ classType: DbConfig })
+  public readonly db!: DbConfig;
+<% } %>
+
+<% if (health) { %>
+  @ValidateNestedProperty({ classType: HealthConfig })
+  public readonly health!: HealthConfig;
+<% } %>
+
+}
