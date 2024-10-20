@@ -22,8 +22,8 @@ module.exports = {
   scopes: [
     { name: 'apps' },
     { name: 'libs' },
+    { name: 'packages' },
     { name: 'tools' },
-    { name: 'configs' },
     { name: 'monorepo' },
   ],
   // 消息步骤

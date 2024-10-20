@@ -15,5 +15,8 @@
     "baseUrl": ".",
     "rootDir": ".",
     "allowJs": true,
+    "paths": {
+      "@aiokit/nestjs": ["packages/nestjs/src/index.ts"]
+    }
   }
 }
